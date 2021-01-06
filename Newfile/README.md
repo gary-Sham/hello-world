@@ -1,4 +1,2 @@
 # hello-world
-Hi, I'm new here. I hope I can upload and track my code.
-
-I am a beginner in web design. I just want to master javascript.
+Hi, I'm new here. Here I will upload some information about the technical issue I face when I'm using my laptop/comp.
