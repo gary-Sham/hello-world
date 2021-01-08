@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<string> split_string(string);
+
+// Complete the saveThePrisoner function below.
+int saveThePrisoner(int n, int m, int s) {
+    int seat = s;
+
+    m-=1; //m minus 1 so that the value will remain 1 at the end(exp: case 1:s=1 taken position 2, s=2 taken position 1, so circular table have overlapping then minus 1? or go back to position 1, or no position 0, since having candy is by diff/minus)
+    //solve the off-by-one problems that exist since prisoners are counted from 1 to N while modular arithmetic is counted from 0.
+    seat = m+seat; //add up the remaining candy position
+   
+    if(seat/n==0){
+        return seat;
+    }
+    else {
+        seat -=n; // to remove the middle starting point to position 1
+        if(seat%n==0){
+            return n;
+        }
+        else{
+            return seat%n;
+        }
+    }
+     
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int t;
+    cin >> t;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        string nms_temp;
+        getline(cin, nms_temp);
+
+        vector<string> nms = split_string(nms_temp);
+
+        int n = stoi(nms[0]);
+
+        int m = stoi(nms[1]);
+
+        int s = stoi(nms[2]);
+
+        int result = saveThePrisoner(n, m, s);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}
