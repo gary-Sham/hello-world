@@ -1,19 +1,18 @@
 var displayArray = function(array,y,minIndex,j) {
     
     var x = 20;
+    
+    stroke(0, 0, 0);
+    strokeWeight(2);
+    line(minIndex*30+25,y+5,j*30+25,y+15); //line to show swapping
+    
     for(var i=0; i<array.length; i++){
         fill(0, 0, 0);
+        textFont(createFont("monospace"), 12); //show text
         text(array[i],x,y+20,100,100);
-        //stroke(255,0,0); //show pt colour
-        //strokeWeight(3); //show the thickness of pt
-        //point(x,y); //show pt
+        
         x = x + 30;
     }
-    
-    stroke(0, 0, 0); //show all the line in the middle
-    line(minIndex*30+25,y+5,j*30+30,y+15); 
-    
-    textFont(createFont("monospace"), 12);
 };
 
 function findMinValue(array,startIndex){
@@ -36,7 +35,7 @@ var swap = function(array, firstIndex, secondIndex){
 
 
 var selectionSort = function(array,y) {
-    //var minIndex = 0;
+
     for(var j=0; j<array.length; j++){
         var minIndex = findMinValue(array,j);
         swap(array,j,minIndex); //j = position in array should be
@@ -47,17 +46,72 @@ var selectionSort = function(array,y) {
     return y;
 };
 
+function findMaxValue(array2,startIndex){
+    var maxValue = array2[startIndex];
+    var maxIndex = startIndex;
+    for(var i=maxIndex+1; i<array2.length; i++){
+        if(array2[i]>maxValue){
+            maxValue = array2[i];
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+var selectionSort_rev = function(array2,y) {
+
+    for(var j=0; j<array2.length; j++){
+        var maxIndex = findMaxValue(array2,j);
+        swap(array2,j,maxIndex); //j = position in array should be
+        displayArray(array2,y,maxIndex,j);
+        y = y + 30;
+        
+    }
+    return y;
+};
+
+
 var array = [2, 1];
-var array1 = [-1,-8,0,17,58,15,71,-15];
+var array1 = [-1,0,-15];
+var array2 = [15,58];
+var array3 = [1,0];
 var y=0;
 
 stroke(0,0,0);
 rect(0,0,395,390);
 
-displayArray(array,y); //show original array num
-y = y+30;
-y = selectionSort(array,y);
+var x =20;
+for(var i=0; i<array.length; i++){ //show original array num
+        fill(0, 0, 0);
+        text(array[i],x,y+20,100,100);
+        x = x + 30;
+}
+y = y+30; //y-coordinate for swapping
+y = selectionSort(array,y); //alter y-coordinate for next display of next array
 
-displayArray(array1,y); //show original array num
+x = 20;
+for(var i=0; i<array1.length; i++){ //show original array num
+        fill(0, 0, 0);
+        text(array1[i],x,y+20,100,100);
+        x = x + 30;
+}
 y = y + 30;
-selectionSort(array1,y);
+y = selectionSort(array1,y);
+
+x = 20;
+for(var i=0; i<array2.length; i++){ //show original array num
+        fill(0, 0, 0);
+        text(array2[i],x,y+20,100,100);
+        x = x + 30;
+}
+y = y + 30;
+y = selectionSort_rev(array2,y);
+
+x = 20;
+for(var i=0; i<array3.length; i++){ //show original array num
+        fill(0, 0, 0);
+        text(array3[i],x,y+20,100,100);
+        x = x + 30;
+}
+y = y + 30; 
+y = selectionSort(array3,y);
