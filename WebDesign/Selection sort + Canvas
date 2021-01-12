@@ -1,0 +1,63 @@
+var displayArray = function(array,y,minIndex,j) {
+    
+    var x = 20;
+    for(var i=0; i<array.length; i++){
+        fill(0, 0, 0);
+        text(array[i],x,y+20,100,100);
+        //stroke(255,0,0); //show pt colour
+        //strokeWeight(3); //show the thickness of pt
+        //point(x,y); //show pt
+        x = x + 30;
+    }
+    
+    stroke(0, 0, 0); //show all the line in the middle
+    line(minIndex*30+25,y+5,j*30+30,y+15); 
+    
+    textFont(createFont("monospace"), 12);
+};
+
+function findMinValue(array,startIndex){
+    var minValue = array[startIndex];
+    var minIndex = startIndex;
+    for(var i=minIndex+1; i<array.length; i++){
+        if(array[i]<minValue){
+            minValue = array[i];
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+var swap = function(array, firstIndex, secondIndex){
+    var temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;    
+};
+
+
+var selectionSort = function(array,y) {
+    //var minIndex = 0;
+    for(var j=0; j<array.length; j++){
+        var minIndex = findMinValue(array,j);
+        swap(array,j,minIndex); //j = position in array should be
+        displayArray(array,y,minIndex,j);
+        y = y + 30;
+        
+    }
+    return y;
+};
+
+var array = [2, 1];
+var array1 = [-1,-8,0,17,58,15,71,-15];
+var y=0;
+
+stroke(0,0,0);
+rect(0,0,395,390);
+
+displayArray(array,y); //show original array num
+y = y+30;
+y = selectionSort(array,y);
+
+displayArray(array1,y); //show original array num
+y = y + 30;
+selectionSort(array1,y);
