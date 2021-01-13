@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+#include <math.h>
+
+using namespace std;
+
+// Complete the extraLongFactorials function below.
+void extraLongFactorials(int n) {
+    int num_first=n;
+    int index = 0;
+    int cap=0; //size of the ans array use
+    int add = 0; // the sum of the num in supercarry
+    vector<int> ans(200,0); //one,ten,hund,thousand,...(later need to reverse)
+    
+    ans[0]=1; //when n= 1;
+    
+    //initialise the num in array
+    while(num_first!=0){
+        ans[cap]=num_first%10;
+        num_first = num_first/10;
+        cap++;
+    }
+    
+    //25 is use as initial num for factorial
+    for(int num_first=n-1; num_first>0; num_first--){
+        for(int i=0; i<cap; i++){
+            
+            if(i==0){
+                add = ans[i]*num_first; //176/120
+            }
+            else{
+                add = (add / 10)+(ans[i]*num_first); //176/10+66,83/10+22=>30/12+48=60
+            }
+            ans[i] = add%10; //6,3,0/0,0
+            index = i;
+        }
+        
+        //when there is remainder in add var
+        while(add!=0){ 
+            index++;
+            add = add/10; //6,0
+            ans[index] = add%10; //6
+        }
+        cap = index; //update the size use in ans array
+
+    }
+    
+    //display the factorial num
+    if(index>0){
+        for(int k=index-1; k>=0; k--){
+            cout<<ans[k];
+        }
+    }
+    else{
+        cout<<ans[0];
+    }
+    
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    extraLongFactorials(n);
+
+    return 0;
+}
