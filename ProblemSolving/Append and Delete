@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+#include <string>
+
+using namespace std;
+
+// Complete the appendAndDelete function below.
+string appendAndDelete(string s, string t, int k) {
+    int index=0; //index that before it, is same
+    int count=k; //delete how many times
+    string sub;
+    //count num of delete
+    
+    for(int j=0; j<s.size() && j<t.size() && s[j]==t[j] ; j++){
+        index = j;
+    }
+    if(index>0){
+        index++; //to state out the value of j when s[j]!=s[j]
+    }
+    //cout<<s.size()-t.size(); 
+    if(k<s.size() || (k-(s.size()-t.size()))%2==0){ //when s="aaa" t="a", even num,k can handle more delete
+        for(int i=s.size()-1; i>=index && s.size()>=0 && count>0; i--){
+            s.erase(s.size()-1,1);
+            //cout<<s<<"|";
+            count--;
+        }
+    }
+    else{
+        for(int i=s.size()-1; i>=0; i--){
+            s.erase(s.size()-1,1);
+            cout<<s<<"|";
+            count--;
+        }
+    }
+    //append t in count+1 to s;
+    if(count>0){
+        sub = t.substr(s.size(),count); //count???
+        s.insert(s.size(),sub);
+    }
+   //cout<<s;
+    
+    if(s==t){
+        return "Yes";
+    }
+    else{
+        return "No";
+    }
+    /*
+    string Append&Delete(string s, string t, int k) {
+    int count,i;
+    for(i=0;s[i],t[i];i++)
+        if(s[i]!=t[i])        
+        break;
+    int n1=s.size(),n2=t.size();
+    count=n1-i+n2-i;
+    
+    if(k==count||k>=n1+n2)       // Case 1
+    return "Yes";
+    else if(count%2==k%2 && count<=k) // Case 2: If count & k are both even/odd and     count<=k then delete and append until steps=k.
+    return "Yes";
+    else               // Case 3
+    return "No";
+}
+    */
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    string t;
+    getline(cin, t);
+
+    int k;
+    cin >> k;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    string result = appendAndDelete(s, t, k);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
