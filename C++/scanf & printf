@@ -1,0 +1,17 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int main() {
+    // Complete the code. Need to initialise var before use
+    int integer;
+    long num = 1234567891324698;
+    char ch='d';
+    float point= 123.23;
+    double d = 234.432;
+    
+    scanf("%d %ld %c %f %lf", &integer, &num, &ch, &point, &d); //d is integer, ld is long, c is char, s is string char, f is float, lf is double, scanf is effective than cin
+    printf("%d\n%ld\n%c\n%f\n%lf", integer, num, ch, point, d); //space sensitive. printf is more effective than cout,  
+    
+    return 0;
+}
