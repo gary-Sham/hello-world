@@ -16,7 +16,7 @@ int main(){
     ptrB = &b;
     
     //display value of pointer;
-    cout<<"value of ptrA(addr): "<<ptrA<<endl;
+    cout<<"value of ptrA(addr): "<<ptrA<<endl; //ptrA's value is addr
     cout<<"value of a: "<<*ptrA<<endl;
     
     cout<<"value of ptrB(addr): "<<ptrB<<endl;
