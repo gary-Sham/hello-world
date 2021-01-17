@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
-void returnNum(int &defer, int *ptr);
-
 int main(){
     int a=0,b=0;
     int *ptrA, *ptrB;
