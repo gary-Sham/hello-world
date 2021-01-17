@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int* readRoomSize(); //use
+
+int main(){
+    int *size; //pointer to receive the dynamic array from pointer func
+    size = readRoomSize();
+    
+    cout<<"First num: "<<size[0]<<endl;
+    cout<<"Second num: "<<size[1]; //test whether the second index in dynamic array still exist
+    return 0;
+}
+
+int *readRoomSize(){ //when u want to return array, put *
+    static int arr[6] = {1,2,3,4,5,6}; //like make it into a global variable
+    return arr; //return dynamic array 
+}
