@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+  char str[] = "A string.";
+  char *ptr;
+  ptr = str; //pointer point to the cstring
+
+
+  cout << str[0] << " | " << *ptr << " | " << str[3]; //ntg special, pointer return the first index of cstring
+  ptr +=2; //pointer address +2, means point forward
+  cout<<endl<<ptr[2]<<" | "<<ptr[5]; //therefore pos 0 in ptr = s, pos 2 = r, pos 5 = g
+
+  return 0;
+}
