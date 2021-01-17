@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+void returnNum(int &defer, int *ptr);
+
+int main(){
+    int a=0,b=0;
+    int *ptrA, *ptrB;
+    
+    cout<<"Enter first integer: ";
+    cin>>a;
+    
+    cout<<"Enter second integer: ";
+    cin>>b;
+    
+    //assign to pointer
+    ptrA = &a;
+    ptrB = &b;
+    
+    //display value of pointer;
+    cout<<"value of ptrA(addr): "<<ptrA<<endl;
+    cout<<"value of a: "<<*ptrA<<endl;
+    
+    cout<<"value of ptrB(addr): "<<ptrB<<endl;
+    cout<<"value of b: "<<*ptrB<<endl;
+    
+    return 0;
+}
