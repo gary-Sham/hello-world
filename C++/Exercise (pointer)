@@ -1,0 +1,110 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+double *readRoomSize(int size);
+void extractLinoInfo(char code[], int codeSize, int roomSize);
+
+int main(){
+    int codeSize=0,roomSize=0;
+    char code[20];
+    double width=0,height=0,linoPrice=0,*ringgit, *syiling;
+    
+    // input code
+    cout<<"What is the code of linoleum to use?: ";
+    cin.getline(code,20); 
+    while(code[codeSize]){
+        codeSize++;
+    }
+        
+    //input rooms
+    cout<<"Enter the number of rooms available: ";
+    cin>>roomSize;
+    cout<<endl;
+    
+    //extract LinoInfo
+    extractLinoInfo(code,codeSize,roomSize);
+    
+    return 0;
+}
+
+double *readRoomSize(int size){
+    double *sqft,width=0,height=0;
+    
+    //input the width and length of each room
+    cout<<"Enter the width and length of each room:"<<endl;
+    sqft = new double[size];
+    
+    for(int i=0; i<size; i++){
+        cout<<"Room #"<<i+1<<" => ";
+        cin>>width>>height;
+        sqft[i] = width * height;
+        cout<<endl;
+    }
+    cout<<endl;
+    
+    return sqft;
+}
+
+void extractLinoInfo(char code[], int codeSize, int roomSize){
+    int linoNum=0;
+    double width=0, height=0, linoPrice=0,*sqft,ringgit=0, syiling=0, linoTotalCost=0;
+    ofstream outData;
+    
+    outData.open("output.txt");
+    
+    //display each sqft 
+    sqft = readRoomSize(roomSize);
+    
+    //analyse the code
+    for(int j=0; j<codeSize; j++ ){
+        if(code[j]-48>9 || code[j]-48<0){
+            continue;
+        }
+        else if(j==1){
+            width = (code[j]-48) * 10 + (code[j+1]-48);
+            width = width/12; //1 foot = 12 inches
+            j++;
+        }
+        else if(j==3){
+            height = (code[j]-48) * 10 + (code[j+1]-48);
+            height = height/12; //1 foot = 12 inches
+            j++;
+            ringgit = codeSize-j-1-2; //-1 because start from pos 0 ,ringgit = 9-4-1-2=2
+        }
+        else if(j>=5 && ringgit>0){
+            linoPrice = linoPrice + (code[j]-48)*(pow(10,ringgit-1));
+            ringgit--;
+        }
+        else if(j==7){
+            syiling = (double( (code[j]-48)*10 + (code[j+1]-48) ))/100;
+            linoPrice = linoPrice + syiling;
+        }
+    }
+    
+    //display Linoleum info
+    outData<<"Linoleum Size: "<<fixed<<setprecision(2)<<width<<" Feet x "<<fixed<<setprecision(2)<<height<<" Feet"<<endl;
+    outData<<"Linoleum Price: RM "<<linoPrice<<" per piece"<<endl;
+    
+    //display room info
+    outData<<endl;
+    outData<<"Room No.     "<<"Size(sqft)      "<<"Number of Linoleum(pieces)          "<<"Cost"<<endl;
+    for(int k=0; k<roomSize; k++){
+        linoNum = linoNum + ceil(sqft[k]/(width*height)); //total num of lino
+        linoTotalCost = linoTotalCost + (ceil(sqft[k]/(width*height)) * linoPrice); //total cost of lino
+        outData<<k+1<<"            "<<sqft[k]<<"                   ";
+        //cout.unsetf(ios::fixed);
+        outData<<fixed<<setprecision(0)<<ceil(sqft[k]/(width*height))<<"                        RM ";
+        outData<<fixed<<setprecision(2)<<(ceil(sqft[k]/(width*height)) * linoPrice);
+        outData<<endl;
+    }
+    
+    outData<<endl;
+    outData<<"Total Linoleum Required: "<<linoNum<<" Pieces"<<endl;
+    outData<<"Total Cost: RM "<<fixed<<setprecision(2)<<linoTotalCost;
+    
+    //need to put into the output file
+    delete[] sqft;
+}
