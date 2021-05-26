@@ -1,0 +1,64 @@
+#include <map>
+#include <iterator>
+#include <iostream>
+using namespace std;
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+
+int main()
+{
+    //empty map container
+    map<int,int> quiz;
+    
+    //insert elements in random order
+    quiz.insert(pair<int,int>(1,5));
+    quiz.insert(pair<int,int>(2,6));
+    quiz.insert(pair<int,int>(3,7));
+    
+    //printing map quiz with iterator
+    map<int,int>::iterator itr;
+    for(itr=quiz.begin(); itr!=quiz.end(); ++itr){
+        cout<<itr->first<<": "<<itr->second<<"\n";
+    }
+    
+    //assign the element from quiz to quiz2
+    map<int,int> quiz2(quiz.begin(),quiz.end());
+    cout<<"Assign quiz to quiz2:\n";
+    for(itr = quiz2.begin(); itr!=quiz2.end(); ++itr){
+        cout<<itr->second<<"\n";
+    }
+    
+    //erase the map quiz2
+    quiz2.erase(quiz2.begin(),quiz2.find(3));
+    cout<<"Remove all the elements except key value (3):\n";
+    for(itr = quiz2.begin(); itr!=quiz2.end(); ++itr){
+        cout<<itr->second<<"\n";
+    }
+    
+    //erase elements with specify key value only
+    quiz.erase(2);
+    cout<<"Erase elements with key value (2):\n";
+    for(itr= quiz.begin(); itr!=quiz.end(); ++itr){
+        cout<<itr->first<<" "<<itr->second<<"\n";
+    }
+    
+    //test lower bound and upper bound of map quiz
+    quiz.insert(pair<int,int>(4,8));
+    quiz.insert(pair<int,int>(5,9));
+    quiz.insert(pair<int,int>(6,8));
+    cout<<"Lower and Upper bound: \n";
+    cout<<quiz.lower_bound(4)->first<<" "<<quiz.lower_bound(4)->second<<"\n";
+    cout<<quiz.upper_bound(4)->first<<" "<<quiz.upper_bound(4)->second;
+    
+    //count key value
+    cout<<"\nCount: \n";
+    cout<<quiz.count(6);
+    return 0;
+}
