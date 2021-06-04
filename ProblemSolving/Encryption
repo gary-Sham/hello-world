@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'encryption' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+
+string encryption(string s) {
+    double sqRoot = sqrt(s.length());
+    int row = 0;
+    int col = 0;
+    int indexStr = 0;
+    int count = 0;
+    string encrypted;
+    
+    //sqrt the length of string
+    row = floor(sqRoot);
+    col = ceil(sqRoot);
+    
+    if(row*col<s.length()){
+        row = col;
+    }
+    
+    vector<string> encrypt(col);
+    //choose the encrypted condition
+
+    for(int i=0; i<s.length(); ++i){
+        encrypt[i%col] += s[i];
+    }
+
+    for(int i=0; i<encrypt.size(); i++){
+        encrypted += encrypt[i];
+        encrypted += " ";
+    }
+    
+    return encrypted;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    string result = encryption(s);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
