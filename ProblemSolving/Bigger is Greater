@@ -1,0 +1,124 @@
+#include <bits/stdc++.h>
+#include <cstring>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+
+/*
+ * Complete the 'biggerIsGreater' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING w as parameter.
+ */
+
+string biggerIsGreater(string w) {
+    vector<char>min;
+    string alphabet = "zyxwvutsrqponmlkjihgfedcba";
+    string nextStr;
+    char removedChar;
+    
+    //Special case 1: the string w is match with alphabet string (self-declared)
+    int pos = alphabet.find(w[0]);
+    string bigChar = alphabet.substr(pos,w.length());
+    if(bigChar==w || w.length()==1){ 
+        //get char from the alphabet string -> compare both string -> if get 0
+        return "no answer";
+    }
+    
+    //Special case 2: compare directly from 2 rightmost string / char
+    if(w[w.length()-1]>w[w.length()-2]){
+        swap(w[w.length()-1],w[w.length()-2]);
+        return w;
+    }
+    
+    //Condition where the string will arrange for next bigger string
+    else{
+        min.push_back(w[w.length()-1]);
+        min.push_back(w[w.length()-2]);
+        cout<<min[0];
+        for(int i=2; i<=w.length(); ++i){ 
+            sort(min.begin(),min.end());
+            //right is greater than left then enter
+            if(w[w.length()-i]>w[w.length()-(i+1)] && i+1<=w.length()){ 
+                for(int j=0; j<min.size(); j++){
+                    //get the minimum greater value than left
+                    if(min[j]>w[w.length()-(i+1)]){
+                        
+                        //(current_involve - 1) + 1(size) - front string
+                        if(w.length()-(i+1)>0){
+                            nextStr += w.substr(0,w.length()-(i+1)); 
+                        }
+                        
+                        //middle string
+                        min.push_back(w[w.length()-(i+1)]);
+                        nextStr += min[j];
+                        min.erase(min.begin()+j);
+                        sort(min.begin(),min.end());
+                        
+                        //remaining part assign (rightmost string)
+                        for(int k=0; k<min.size(); k++){
+                            nextStr += min[k];
+                        }
+                    }
+                    if(nextStr!=""){
+                        return nextStr;
+                    }
+                }
+            }  
+            min.push_back(w[w.length()-(i+1)]);
+        }
+    }
+    if(nextStr==""){
+        return "no answer";
+    }
+    else{
+        return nextStr;
+    }
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string T_temp;
+    getline(cin, T_temp);
+
+    int T = stoi(ltrim(rtrim(T_temp)));
+
+    for (int T_itr = 0; T_itr < T; T_itr++) {
+        string w;
+        getline(cin, w);
+
+        string result = biggerIsGreater(w);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
