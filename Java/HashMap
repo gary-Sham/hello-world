@@ -1,0 +1,26 @@
+
+import java.util.HashMap;
+
+public class Main
+{
+	public static void main(String[] args) {
+		//System.out.println("Hello World");
+		
+		HashMap<Integer,String> storage = new HashMap<Integer,String>();
+	    storage.put(1,"name");
+	    storage.put(2,"age");
+	    
+	    //print specific item of a key 
+	    System.out.println(storage.get(1));
+	    
+	    //print key
+	    for(int i: storage.keySet()){
+	        System.out.println(i);
+	    }
+	    
+	    //print item
+	    for(String j: storage.values()){
+	        System.out.println(j);
+	    }
+	}
+}
