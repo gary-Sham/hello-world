@@ -1,0 +1,131 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
+
+/*
+ * Complete the 'howManyGames' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER p
+ *  2. INTEGER d
+ *  3. INTEGER m
+ *  4. INTEGER s
+ */
+
+int quadratic(int a, int b, int c){
+    int sqrt_term = abs((b*b)- (4 * a * c));
+    int pos = (-b + sqrt(sqrt_term))/(2 * a);
+    int neg = (-b - sqrt(sqrt_term)) / (2 * a);
+    //cout<<pos<<" "<<neg;
+    if(pos>neg){
+        return pos;
+    }
+    else{
+        return neg;   
+    }
+}
+
+int howManyGames(int p, int d, int m, int s) {
+    // Return the number of games you can buy
+    //p = initial price, d = discount price, m = threshold price, s = currency I have
+    /*int countGame = 0;
+    for(int i=p; s>=0; i-=d){
+        if(i<=m){
+            i=m;
+        }
+        s -= i;
+        countGame++; 
+    }
+    return countGame-1;*/
+    
+    //Another solution:
+    //know the minimum position
+    //if s is smaller than minimum position then use quadratic to get n
+    //if s is bigger than minimum position then use quadratic to get n and add more
+    d = -d;
+    int countGame = 0;
+    int min_pos = ((m - p) /d) + 1;
+    int n = min_pos; //the num of games
+    //cout<<n;
+    int sum = (n * (2 * p + ((n-1) * d)))/2;
+
+    if(s<sum){ 
+        n = quadratic(d, -(d+2*p), 2*s);
+    }
+    else{
+        s -= sum;
+        n += (s/m);
+    }
+
+    return n;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string first_multiple_input_temp;
+    getline(cin, first_multiple_input_temp);
+
+    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+
+    int p = stoi(first_multiple_input[0]);
+
+    int d = stoi(first_multiple_input[1]);
+
+    int m = stoi(first_multiple_input[2]);
+
+    int s = stoi(first_multiple_input[3]);
+
+    int answer = howManyGames(p, d, m, s);
+
+    fout << answer << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
+
+    return s;
+}
+
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
+
+vector<string> split(const string &str) {
+    vector<string> tokens;
+
+    string::size_type start = 0;
+    string::size_type end = 0;
+
+    while ((end = str.find(" ", start)) != string::npos) {
+        tokens.push_back(str.substr(start, end - start));
+
+        start = end + 1;
+    }
+
+    tokens.push_back(str.substr(start));
+
+    return tokens;
+}
