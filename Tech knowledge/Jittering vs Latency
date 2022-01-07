@@ -1,0 +1,3 @@
+Latency is the measurement of the data reaching at the destination, 
+while Jittering is the delay / fault that will cause bit error and slow down the performance in data transmission.
+Jittering is also describes as the amount of inconsistency in latency across the network.
