@@ -1,0 +1,27 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <regex>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    string S;
+    smatch txt;
+    regex reg ("hackerrank");
+    int numMatch = 0;
+    
+    //if match, numMatch+1
+    while(cin>>S){
+        if(regex_search(S, txt, reg)){
+            numMatch++;
+        }
+    }
+    cout<<"Number of matches : "<<numMatch;
+    
+    return 0;
+}
